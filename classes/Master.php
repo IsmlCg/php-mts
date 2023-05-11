@@ -117,7 +117,8 @@ Class Master extends DBConnection {
 		}else{
 			if(isset($until) && !empty($until)){
 				if(!empty($data)) $data .= ", ";
-				$data .= "`until` = NULL ";
+				$end = $_POST['until'];
+				$data .= "`until` = '{$end}' ";
 			}
 		}
 		if(empty($id)){

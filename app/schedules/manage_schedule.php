@@ -22,10 +22,11 @@ if(isset($_GET['id'])){
                         <label for="medicine_id" class="form-label">Medicine <span class="text-primary">*</span></label>
                         <select id="medicine_id" name="medicine_id" value="<?= isset($location) ? $location : "" ?>" class="form-select" required>
                         <?php 
-                        $categories = $conn->query("SELECT * FROM `medicine_list` where user_id = '{$_settings->userdata('id')}' order by `name` asc");
+                        $sql = "SELECT id, name FROM `medicine_list` where user_id = '{$_settings->userdata('id')}' order by `name` asc";
+                        $categories = $conn->query( $sql );
                         while($row = $categories->fetch_assoc()):
                         ?>
-                        <option value="<?= $row['id'] ?>" <?= isset($cats) && in_array($row['id'], $cats) ? "selected" : "" ?>><?= $row['name'] ?></option>
+                        <option value="<?= $row['id'] ?>" <?= $medicine_id == $row['id']? "selected" : "" ?>><?= $row['name'] ?></option>
                         <?php endwhile; ?>
                         </select>
                     </div>
@@ -47,7 +48,7 @@ if(isset($_GET['id'])){
                     </div>
                     <div class="input-group input-group-dynamic is-filled">
                         <label for="until" class="form-label">Medication Ends At <span class="text-primary">*</span></label>
-                        <input type="date" id="until" name="until" value="<?= isset($until) ? $until : "" ?>" class="form-control">
+                        <input type="date" id="until" name="until" <?= isset($until) ? '' : "readonly=readonly"?> value="<?= isset($until) ? $until : "" ?>" class="form-control">
                     </div>
                     <div class="mb-4 row justify-content-center align-items-center">
                         <label for="lifetime_schedule">
