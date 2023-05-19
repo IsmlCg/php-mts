@@ -10,10 +10,52 @@ Class Users extends DBConnection {
 	public function __destruct(){
 		parent::__destruct();
 	}
+	
+
+	// Additional processing logic
+	// ...
+	function isStrongPassword($password) {
+		// Define the password requirements
+		$minLength = 8;
+		$uppercaseRegex = '/[A-Z]/';
+		$lowercaseRegex = '/[a-z]/';
+		$numberRegex = '/[0-9]/';
+		$specialCharRegex = '/[!@#$%^&*()\-_=+{};:,<.>]/';
+
+		// Perform the checks
+		if (strlen($password) < $minLength) {
+			return false;
+		}
+		if (!preg_match($uppercaseRegex, $password)) {
+			return false;
+		}
+		if (!preg_match($lowercaseRegex, $password)) {
+			return false;
+		}
+		if (!preg_match($numberRegex, $password)) {
+			return false;
+		}
+		if (!preg_match($specialCharRegex, $password)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public function save_users(){
 		if(empty($_POST['password']))
 			unset($_POST['password']);
-		else
+		else{
+			$password = $_POST['password'];
+
+			// Validate password strength
+			if ( !$this->isStrongPassword( $password ) ) {
+				$resp['status'] = 'failed';
+				$resp['msg'] = 'The password must be at least 8 characters long and contain a combination of uppercase letters, lowercase letters, numbers, and special characters.';
+				$resp['error'] = $this->conn->error;
+				return json_encode($resp);
+			}
+		}
 			$_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		extract($_POST);
 		$id = $id ?? '';

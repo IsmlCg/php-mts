@@ -26,7 +26,7 @@ if(isset($_GET['id'])){
                         $categories = $conn->query( $sql );
                         while($row = $categories->fetch_assoc()):
                         ?>
-                        <option value="<?= $row['id'] ?>" <?= $medicine_id == $row['id']? "selected" : "" ?>><?= $row['name'] ?></option>
+                        <option value="<?= $row['id'] ?>" <?=isset($medicine_id)&& $medicine_id == $row['id']? "selected" : "" ?>><?= $row['name'] ?></option>
                         <?php endwhile; ?>
                         </select>
                     </div>
@@ -47,7 +47,7 @@ if(isset($_GET['id'])){
                         <input type="date" id="date_start" name="date_start" value="<?= isset($date_start) ? $date_start : "" ?>" class="form-control" required>
                     </div>
                     <div class="input-group input-group-dynamic is-filled">
-                        <label for="until" class="form-label">Medication Ends At <span class="text-primary">*</span></label>
+                        <label for="until" class="form-label">Medication Ends At</label>
                         <input type="date" id="until" name="until" <?= isset($until) ? '' : "readonly=readonly"?> value="<?= isset($until) ? $until : "" ?>" class="form-control">
                     </div>
                     <div class="mb-4 row justify-content-center align-items-center">

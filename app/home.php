@@ -49,9 +49,15 @@
                         </thead>
                         <tbody>
                             <?php 
-                            $dow = date("Y");
-                            $now = date("Y-m-d");
+                            // Create a new DateTime object
+                            $dateTime = new DateTime();
+                            // Set the timezone to Dublin
+                            $dateTime->setTimezone(new DateTimeZone("Europe/Dublin"));
+                            // Get the current date and time in Dublin
+                            $now = $dateTime->format('Y-m-d');
+                            $dow = $dateTime->format('Y');
                             $med_sched_sql = "SELECT sl.*, ml.name as med_name, ml.description as med_description FROM `schedule_list` sl inner join medicine_list ml on ml.id = sl.medicine_id where sl.user_id = '{$_settings->userdata('id')}' and date_format(`sl`.`date_start`, '%Y-%m-%d') >= '{$now}' and (until IS NULL OR date_format(`sl`.`until`, '%Y-%m-%d') > '{$now}') order by abs(unix_timestamp(CONCAT('{$now} ',`sl`.`time`)))";
+                            // var_dump( $now );exit;
                             $med_sched_qry = $conn->query($med_sched_sql);
                             while($row = $med_sched_qry->fetch_assoc()):
                             ?>
