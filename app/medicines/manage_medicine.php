@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
                     <div id="filter-holder">
                         <div class="input-group mb-3 input-group-dynamic <?= isset($name) ? 'is-filled' : '' ?>">
                             <label for="name" class="form-label">Medicine Name <span class="text-primary">*</span></label>
-                            <input type="text" id="name" name="name" value="<?= isset($name) ? $name : "" ?>" autofocus class="form-control">
+                            <input type="text" id="name" name="name" value="<?= isset($name) ? $name : "" ?>" autofocus class="form-control"required="required">
                         </div>
                     </div>
                     <div class="form-group mb-3">

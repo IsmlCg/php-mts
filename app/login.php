@@ -166,8 +166,6 @@ $page_name = explode("/",$page)[count(explode("/",$page)) -1];
                             $('html, body').scrollTop(_this.offset().top - '150')
                         }
                         end_loader()
-                        console
-
                     }
                 })
             })

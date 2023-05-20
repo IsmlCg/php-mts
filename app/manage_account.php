@@ -39,13 +39,13 @@ if($qry->num_rows > 0){
                             <input type="text" name="username" id="username" class="form-control form-control-lg" value="<?= isset($username) ?  $username : '' ?>" required="required">
                         </div>
                         <div class="form-group mb-3 input-group input-group-dynamic is-filled">
-                            <label for="password" class="form-label">New Password</label>
-                            <input type="password" name="password" id="password" class="form-control form-control-lg">
+                            <label for="password" class="form-label">New Password<span class="text-primary">*</span></label>
+                            <input type="password" name="password" id="password" class="form-control form-control-lg" required="required">
                             <button type="button" tabindex="-1" class="btn btn-outline-primary btn-lg mb-0 rounded-0 border-0 px-1 pass_view"><i class="material-icons">visibility_off</i></button>
                         </div>
                         <div class="form-group mb-3 input-group input-group-dynamic is-filled">
-                            <label for="cpassword" class="form-label">Confirm New Password</label>
-                            <input type="password" id="cpassword" class="form-control form-control-lg">
+                            <label for="cpassword" class="form-label">Confirm New Password<span class="text-primary">*</span></label>
+                            <input type="password" id="cpassword" class="form-control form-control-lg" required="required">
                             <button type="button" tabindex="-1" class="btn btn-outline-primary btn-lg mb-0 rounded-0 border-0 px-1 pass_view"><i class="material-icons">visibility_off</i></button>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ if($qry->num_rows > 0){
                     },
                     success:function(resp){
                         if(resp.status == 'success'){
-                            location.reload();
+                            // location.reload();
                         }else if(!!resp.msg){
                             el.text(resp.msg)
                             _this.prepend(el)
