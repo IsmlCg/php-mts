@@ -34,7 +34,7 @@ if($qry->num_rows > 0){
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3 input-group input-group-dynamic is-filled">
-                            <label for="username" class="form-label">Username</label>
+                            <label for="username" class="form-label">Username <span class="text-primary">*</span></label>
                             <span class="input-group-text"><i class="material-icons" aria-hidden="true">person_outline</i></span>
                             <input type="text" name="username" id="username" class="form-control form-control-lg" value="<?= isset($username) ?  $username : '' ?>" required="required">
                         </div>
@@ -98,7 +98,7 @@ if($qry->num_rows > 0){
                     },
                     success:function(resp){
                         if(resp.status == 'success'){
-                            // location.reload();
+                            location.reload();
                         }else if(!!resp.msg){
                             el.text(resp.msg)
                             _this.prepend(el)
