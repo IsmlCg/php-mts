@@ -5,7 +5,7 @@ class DatabaseIntegrationTest extends TestCase {
     private $conn;
 
     protected function setUp(): void {
-        $this->conn = new mysqli('localhost', 'root', '', 'mts_db');
+        $this->conn = new mysqli('localhost', 'username', 'password', 'database');
         // Create necessary tables or prepare the database state
     }
 
@@ -14,9 +14,8 @@ class DatabaseIntegrationTest extends TestCase {
     }
 
     public function testDatabaseInsertion() {
-        $sql = "INSERT INTO `medicine_list`( `user_id`, `name`, `description` ) VALUES ( 2, 'prod 123','testing');";
+        $sql = "INSERT INTO users (username, email) VALUES ('john.doe', 'john.doe@example.com')";
         $result = $this->conn->query($sql);
         $this->assertTrue($result);
     }
-
 }
