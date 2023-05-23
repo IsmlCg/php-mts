@@ -2,10 +2,10 @@
 use PHPUnit\Framework\TestCase;
 
 class DatabaseIntegrationTest extends TestCase {
-    private $conn;
+    private $connect;
 
     protected function setUp(): void {
-        $this->conn = new mysqli('localhost', 'username', 'password', 'database');
+        $this->connect = new mysqli('localhost', 'root', '', 'mts_db');
         // Create necessary tables or prepare the database state
     }
 
@@ -14,8 +14,8 @@ class DatabaseIntegrationTest extends TestCase {
     }
 
     public function testDatabaseInsertion() {
-        $sql = "INSERT INTO users (username, email) VALUES ('john.doe', 'john.doe@example.com')";
-        $result = $this->conn->query($sql);
+        $sql = "INSERT INTO medicine_list ( user_id, name, description ) VALUES ( 2,'Aspirin', 'Aspirin-also known as acetylsalicylic acid-is sold over the counter and comes in many forms, from the familiar white tablets to chewing gum and rectal suppositories.');";
+        $result = $this->connect->query($sql);
         $this->assertTrue($result);
     }
 }
