@@ -117,7 +117,15 @@ Class Master extends DBConnection {
 		}else{
 			if(isset($until) && !empty($until)){
 				if(!empty($data)) $data .= ", ";
-				$data .= "`until` = NULL ";
+				$dateEnd = $_POST['until'];
+				$dateStart = $_POST['date_start'];
+				$data .= "`until` = '{$dateEnd}' ";
+				if ( $dateStart > $dateEnd ){
+					$resp['status'] = 'failed';
+					$resp['msg'] = 'End date must be greater than or equal to start date.';
+					$resp['error'] = $this->conn->error;
+					return json_encode($resp);
+				}
 			}
 		}
 		if(empty($id)){
@@ -181,12 +189,18 @@ Class Master extends DBConnection {
 			$row['no'] = $i++;
 			$row['date_start'] = date("F d, Y",strtotime($row['date_start']));
 			$row['date_start'] = date("F d, Y",strtotime($row['date_start']));
+			 // Create a new DateTime object
+			 $dateTime = new DateTime();
+			 // Set the timezone to Dublin
+			 $dateTime->setTimezone(new DateTimeZone("Europe/Dublin"));
+			 // Get the current date and time in Dublin
+			 $now = $dateTime->format('Y-m-d');
 			if(is_null($row['until'])){
 				$row['status'] = '1';
-			}elseif(strtotime(date('Y-m-d')) < strtotime($row['until'])){
-				$row['status'] = '0';
-			}else{
+			}elseif(strtotime( $now ) <= strtotime($row['until'])){
 				$row['status'] = '1';
+			}else{
+				$row['status'] = '0';
 			}
 			$data[] = $row;
 		}
@@ -265,6 +279,6 @@ switch ($action) {
 		echo $Master->dt_schedules_public();
 	break;
 	default:
-		// echo $sysset->index();
-		break;
+		echo $sysset->index();
+	break;
 }
